@@ -6,7 +6,7 @@ void	config(t_game *game)
 	while (game->render[x])
 		x++;
 	game->wid = (x * IMG_SIZE);
-	game->hei = strlen(game->render[0]) * IMG_SIZE;
+	game->hei = (strlen(game->render[0]) - 1) * IMG_SIZE;
 	//game->win = mlx_new_window(game->mlx, game->hei, game->wid, "so_long");
 	SDL_CreateWindowAndRenderer(game->wid, game->hei, 0, &game->window, &game->renderer);
 	if (game->window == NULL) {
@@ -17,7 +17,7 @@ void	config(t_game *game)
 	SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
 	SDL_RenderClear(game->renderer);
 	SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
-	//img_init(game);
+	img_init(game);
 }
 
 /*int	close_game(const t_game *game)

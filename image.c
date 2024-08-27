@@ -22,29 +22,29 @@ void *image(t_game *game, char *path)
 	return img;
 }
 
-void sdl_put_image_to_window(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y) {
+void sdl_put_image_to_window(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y)
+{
+	printf("Chega aqui 4\n");
 	SDL_Rect destRect;
 	destRect.x = x;
 	destRect.y = y;
 
-	// Obtém as dimensões da textura
 	int w, h;
 	SDL_QueryTexture(texture, NULL, NULL, &w, &h);
 	destRect.w = w;
 	destRect.h = h;
 
-	// Desenha a textura na janela
 	SDL_RenderCopy(renderer, texture, NULL, &destRect);
 }
 
 int	*img_init(t_game *game)
 {
 	int	pixel = IMG_SIZE;
-	game->player = image(game, "images/player.xpm");
-	game->tree = image(game, "images/tree.xpm");
-	game->floor = image(game, "images/floor.xpm");
-	game->exit = image(game, "images/exit.xpm");
-	game->item = image(game, "images/item.xpm");
+	game->player = image(game, CHAR);
+	game->tree = image(game, TREE);
+	game->floor = image(game, FLOOR);
+	game->exit = image(game, EXIT);
+	game->item = image(game, ITEM);
 	return (0);
 }
 
