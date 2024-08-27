@@ -7,29 +7,9 @@
 # include <string.h>
 # include <unistd.h>
 # include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+# include <SDL2/SDL_keycode.h>
+# include <SDL2/SDL_image.h>
 
-# ifdef __linux__
-
-enum	e_keycode
-{
-	UP = 119,
-	DOWN = 115,
-	LEFT = 97,
-	RIGHT = 100,
-	KEY_ESC = 65307
-};
-# else
-
-enum	e_keycode
-{
-	UP = 13,
-	DOWN = 1,
-	LEFT = 0,
-	RIGHT = 2,
-	KEY_ESC = 53
-};
-# endif
 
 # define SDL_ERROR 1
 # define IMG_SIZE 32
@@ -77,7 +57,6 @@ typedef struct s_game
 	int			px;
 	int			py;
 	void		*sdl;
-	// void		*win;
 	void		*player;
 	void		*tree;
 	void		*floor;
@@ -96,7 +75,7 @@ void	putchar_fd(const char c, const int fd);
 void	putstr_fd(char *s, const int fd);
 void	putendl(char *s, const int fd);
 int		game_error(char	*msg);
-int		game_sucess(char	*msg);
+int		game_success(char	*msg);
 void	render_free(char **render);
 void	check_ber(const char *find);
 
@@ -116,7 +95,7 @@ char		**split_string(char const *s, char c);
 
 //config.c
 void	config(t_game *game);
-int		close_game(const t_game *game);
+void	close_game(t_game *game);
 void	initializator(t_game *game);
 void	map_counter(t_game *game);
 int		counter_error(t_game *game);
@@ -136,8 +115,7 @@ void	change_image(t_game *game, char *new_image);
 int		*img_init(t_game *game);
 
 //movement.c
-void	deal_key(int keycode, t_game *game);
-int		key_hook(int keycode, t_game *game);
+void	deal_key(const SDL_Keycode keycode, t_game *game);
 
 //infection.c
 void	translate_infect_map(t_game *game, int x, int y);

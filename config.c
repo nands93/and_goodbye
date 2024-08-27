@@ -19,15 +19,18 @@ void	config(t_game *game)
 	img_init(game);
 }
 
-/*int	close_game(const t_game *game)
+void	close_game(t_game *game)
 {
 	free(game->buffer);
 	free(game->map);
 	render_free(game->render);
 	render_free(game->infected_map);
+	SDL_DestroyRenderer(game->renderer);
+	SDL_DestroyWindow(game->window);
+	game->finish = 1;
+	SDL_Quit();
 	exit(0);
-	return (0);
-}*/
+}
 
 void	initializator(t_game *game)
 {

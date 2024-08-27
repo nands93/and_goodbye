@@ -33,6 +33,12 @@ int	main(int argc, char **argv)
 				if (e.type == SDL_QUIT) {
 					quit = 1;
 				}
+				else if (e.type == SDL_KEYDOWN) {
+					deal_key(e.key.keysym.sym, &game);
+				}
+				else if (e.type == SDL_QUIT) {
+					close_game(&game);
+				}
 			}
 			SDL_RenderPresent(game.renderer);
 		}

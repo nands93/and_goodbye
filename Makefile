@@ -8,7 +8,7 @@ CFLAGS = -I/usr/include/SDL2
 LDFLAGS = -L/usr/lib -lSDL2
 SDLFLAGS	=	`sdl2-config --cflags --libs` -lSDL2 -lSDL2_mixer -lSDL2_image -lSDL2_ttf
 
-SRC	= config.c utils.c read_fd.c split_string.c render.c image.c validator.c infected_map.c and_goodbye.c
+SRC	= config.c utils.c read_fd.c split_string.c render.c image.c validator.c infected_map.c and_goodbye.c movement.c
 
 OBJS	= $(SRC:.c=.o)
 

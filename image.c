@@ -71,8 +71,8 @@ void	translate_map(t_game *game, const int x, const int y)
 	}
 }
 
-/*void	change_image(t_game *game, char *new_image)
+void	change_image(t_game *game, char *new_image)
 {
-	mlx_destroy_image(game->mlx, game->player);
+	SDL_DestroyTexture(game->player);
 	game->player = image(game, new_image);
-}*/
+}
