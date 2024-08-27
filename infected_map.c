@@ -2,11 +2,8 @@
 
 void	translate_infect_map(t_game *game, int x, int y)
 {
-	int	height;
-	int	width;
-
-	height = y * IMG_SIZE;
-	width = x * IMG_SIZE;
+	int	height = y * IMG_SIZE;
+	int width = x * IMG_SIZE;
 	if (game->infected_map[x][y] == '1')
 		sprites(game, game->tree, height, width);
 	if (game->infected_map[x][y] == '0')
@@ -25,13 +22,10 @@ void	translate_infect_map(t_game *game, int x, int y)
 
 int	draw_infection_map(t_game *game)
 {
-	int	x;
-	int	y;
-
-	x = 0;
+	int x = 0;
 	while (game->infected_map[x])
 	{
-		y = 0;
+		int y = 0;
 		while (game->infected_map[x][y])
 		{
 			translate_infect_map(game, x, y);
