@@ -16,7 +16,6 @@
 # define FLOOR "./img/environment/floor.xpm"
 # define ITEM "./img/environment/collectable.xpm"
 # define EXIT "./img/environment/exit.xpm"
-
 # define CHAR "./img/character/idle_front.xpm"
 # define CHAR_BACK "./img/character/idle_back.xpm"
 # define CHAR_LEFT "./img/character/idle_left.xpm"
@@ -105,7 +104,6 @@ int		check_validation(t_game *game);
 void	*image(t_game *game, char *path);
 void	sprites(t_game *game, void *img, int x, int y);
 void	translate_map(t_game *game, const int x, const int y);
-void	put_layout(char **map, t_game *game);
 void	change_image(t_game *game, char *new_image);
 int		*img_init(t_game *game);
 
