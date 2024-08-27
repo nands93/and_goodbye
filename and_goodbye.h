@@ -80,7 +80,6 @@ void	check_ber(const char *find);
 
 //read_fd.c
 char	*strjoin(char *s1, char *s2);
-char	*ft_chrstr(char *s, int c);
 char	*line_fd(char *saved);
 char	*saved_fd(char *saved);
 char	*read_fd(const int fd, char *saved);

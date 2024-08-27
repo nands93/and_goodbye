@@ -3,36 +3,32 @@
 void *image(t_game *game, char *path)
 {
 	SDL_Surface *xpmSurface = IMG_Load(path);
-	if (!xpmSurface) {
+	if (!xpmSurface)
+	{
 		printf("Not possible to load XPM image: %s\n", IMG_GetError());
-		SDL_DestroyRenderer(game->renderer);
-		SDL_DestroyWindow(game->window);
-		SDL_Quit();
-		return NULL;
+		close_game(game);
 	}
 	SDL_Texture *img = SDL_CreateTextureFromSurface(game->renderer, xpmSurface);
 	SDL_FreeSurface(xpmSurface);
-	if (!img) {
+	if (!img)
+	{
 		printf("Not possible to create texture: %s\n", SDL_GetError());
-		SDL_DestroyRenderer(game->renderer);
-		SDL_DestroyWindow(game->window);
-		SDL_Quit();
-		return NULL;
+		close_game(game);
 	}
 	return img;
 }
 
 void sdl_put_image_to_window(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y)
 {
-	SDL_Rect destRect;
+	int			wid;
+	int			hei;
+	SDL_Rect	destRect;
+
 	destRect.x = x;
 	destRect.y = y;
-
-	int wid, hei;
 	SDL_QueryTexture(texture, NULL, NULL, &wid, &hei);
 	destRect.w = wid;
 	destRect.h = hei;
-
 	SDL_RenderCopy(renderer, texture, NULL, &destRect);
 }
 
