@@ -5,9 +5,8 @@ void	config(t_game *game)
 	size_t	x = 0;
 	while (game->render[x])
 		x++;
-	game->wid = (x * IMG_SIZE);
-	game->hei = (strlen(game->render[0]) - 1) * IMG_SIZE;
-	//game->win = mlx_new_window(game->mlx, game->hei, game->wid, "so_long");
+	game->wid = ((strlen(game->render[0]) - 1) * IMG_SIZE);
+	game->hei = (x * IMG_SIZE);
 	SDL_CreateWindowAndRenderer(game->wid, game->hei, 0, &game->window, &game->renderer);
 	if (game->window == NULL) {
 		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());

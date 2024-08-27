@@ -23,34 +23,25 @@ void	format_checker(char **render)
 
 void walls_checker(const t_game *game)
 {
+	const int row = (game->hei / IMG_SIZE) - 1;
+	const int col = (game->wid / IMG_SIZE) - 1;
+
 	int x = 0;
-	int y = 0;
-	const int row = (game->wid / IMG_SIZE) - 1;
-	const int col = (game->hei / IMG_SIZE) - 1;
-
-	// Verificar o conteúdo da matriz
-	printf("row: %d, col: %d\n", row, col);
-
-	// Verificar as paredes laterais
 	while (x <= row)
 	{
 		if (game->render[x][0] != '1' || game->render[x][col] != '1')
 		{
-			printf("game->render[x][0]: %c\n", game->render[x][0]);
-			printf("game->render[x][col]: %c\n", game->render[x][col]);
 			game_error("Error\nMAP MUST BE SURROUNDED BY WALLS 1");
 		}
 		x++;
 	}
-
-	// Verificar as paredes superior e inferior
+	int y = 0;
 	while (y <= col)
 	{
 		if (game->render[0][y] != '1' || game->render[row][y] != '1')
 			game_error("Error\nMAP MUST BE SURROUNDED BY WALLS 2");
 		y++;
 	}
-	printf("Fim wall checker\n");
 }
 
 
@@ -85,7 +76,6 @@ int	check_validation(t_game *game)
 	format_checker(game->render);
 	char_checker(game->render);
 	walls_checker(game);
-	printf("Passou wall chacker\n");
 	counter_error(game);
 	path_checker(game, game->config.x, game->config.y);
 	return (1);

@@ -24,22 +24,20 @@ void *image(t_game *game, char *path)
 
 void sdl_put_image_to_window(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y)
 {
-	printf("Chega aqui 4\n");
 	SDL_Rect destRect;
 	destRect.x = x;
 	destRect.y = y;
 
-	int w, h;
-	SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-	destRect.w = w;
-	destRect.h = h;
+	int wid, hei;
+	SDL_QueryTexture(texture, NULL, NULL, &wid, &hei);
+	destRect.w = wid;
+	destRect.h = hei;
 
 	SDL_RenderCopy(renderer, texture, NULL, &destRect);
 }
 
 int	*img_init(t_game *game)
 {
-	int	pixel = IMG_SIZE;
 	game->player = image(game, CHAR);
 	game->tree = image(game, TREE);
 	game->floor = image(game, FLOOR);
