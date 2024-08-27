@@ -6,7 +6,7 @@ static void	print_steps(t_game *game)
 	printf("Steps: %d\n", game->config.moves);
 }
 
-static void	move_player(t_game	*game, int x, int y)
+static void	move_player(t_game *game, int x, int y)
 {
 	int px = game->config.x;
 	int py = game->config.y;

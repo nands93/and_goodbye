@@ -1,33 +1,38 @@
 #include "and_goodbye.h"
 
-void	putchar_fd(const char c, const int fd) {
+void	putchar_fd(const char c, const int fd)
+{
 	write (fd, &c, 1);
 }
 
-void	putstr_fd(char *s, const int fd) {
+void	putstr_fd(char *s, const int fd)
+{
 	if (!s) return;
-	while (*s) {
+	while (*s)
 		putchar_fd(*s++, fd);
-	}
 }
 
-void	putendl(char *s, const int fd) {
+void	putend(char *s, const int fd)
+{
 	if (!s) return;
 	putstr_fd(s, fd);
 	putchar_fd('\n', fd);
 }
 
-int	game_error(char	*msg) {
-	putendl(msg, 2);
+int	game_error(char	*msg)
+{
+	putend(msg, 2);
 	exit(EXIT_FAILURE);
 }
 
-int	game_success(char	*msg) {
+int	game_success(char	*msg)
+{
 	printf("%s\n", msg);
 	exit(EXIT_SUCCESS);
 }
 
-void	render_free(char **render) {
+void	render_free(char **render)
+{
 	int i = 0;
 	while (render[i])
 	{

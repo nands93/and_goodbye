@@ -10,8 +10,6 @@
 # include <SDL2/SDL_keycode.h>
 # include <SDL2/SDL_image.h>
 
-
-# define SDL_ERROR 1
 # define IMG_SIZE 32
 # define BUFFER_SIZE 42
 # define TREE "./img/environment/tree.xpm"
@@ -44,26 +42,27 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	SDL_Window* window;
-	SDL_Renderer* renderer;
-	char		**render;
-	char		**infected_map;
-	char		*buffer;
-	char		*map;
-	int			collect;
-	int			finish;
-	int			hei;
-	int			wid;
-	int			px;
-	int			py;
-	void		*sdl;
-	void		*player;
-	void		*tree;
-	void		*floor;
-	void		*exit;
-	void		*item;
-	t_player	config;
-	t_map		counter;
+	SDL_Window*		window;
+	SDL_Renderer*	renderer;
+	SDL_Surface*	screenSurface;
+	char**			render;
+	char**			infected_map;
+	char*			buffer;
+	char*			map;
+	int				collect;
+	int				finish;
+	int				hei;
+	int				wid;
+	int				px;
+	int				py;
+	void*			sdl;
+	void*			player;
+	void*			tree;
+	void*			floor;
+	void*			exit;
+	void*			item;
+	t_player		config;
+	t_map			counter;
 }	t_game;
 
 //render.c
@@ -73,7 +72,7 @@ int		draw_map(t_game *game);
 //utils.c
 void	putchar_fd(const char c, const int fd);
 void	putstr_fd(char *s, const int fd);
-void	putendl(char *s, const int fd);
+void	putend(char *s, const int fd);
 int		game_error(char	*msg);
 int		game_success(char	*msg);
 void	render_free(char **render);
@@ -101,9 +100,6 @@ void	map_counter(t_game *game);
 int		counter_error(t_game *game);
 
 //validator.c
-void	format_checker(char **render);
-void	walls_checker(const t_game *game);
-void	char_checker(char **map);
 int		check_validation(t_game *game);
 
 //image.c

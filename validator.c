@@ -1,13 +1,13 @@
 #include "and_goodbye.h"
 
-void	remove_newline(char *str)
+static void	remove_newline(char *str)
 {
 	const size_t len = strlen(str);
 	if (len > 0 && str[len - 1] == '\n')
 		str[len - 1] = '\0';
 }
 
-void	format_checker(char **render)
+static void	format_checker(char **render)
 {
 	int i = 0;
 	remove_newline(render[0]);
@@ -21,7 +21,7 @@ void	format_checker(char **render)
 	}
 }
 
-void walls_checker(const t_game *game)
+static void walls_checker(const t_game *game)
 {
 	const int row = (game->hei / IMG_SIZE) - 1;
 	const int col = (game->wid / IMG_SIZE) - 1;
@@ -45,7 +45,7 @@ void walls_checker(const t_game *game)
 }
 
 
-void	char_checker(char **map)
+static void	char_checker(char **map)
 {
 	int i = 0;
 	while (map[i])
@@ -61,7 +61,7 @@ void	char_checker(char **map)
 	}
 }
 
-int	path_checker(t_game *game, int x, int y)
+static int	path_checker(t_game *game, int x, int y)
 {
 	infection_checker(game, x, y);
 	if (game->counter.item != game->counter.infected_item)
