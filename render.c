@@ -1,23 +1,44 @@
 #include "and_goodbye.h"
 
-char	**render_map(t_game *render, const char *path)
-{
-	const int	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		game_error("ERROR: FILE NOT FOUND");
-	while (1)
+#ifdef _WIN32
+	char	**render_map(t_game *render, const char *path)
 	{
-		render->buffer = keep_reading_fd(fd);
-		if (render->buffer == NULL)
-			break ;
-		render->map = strjoin(render->map, render->buffer);
-		free(render->buffer);
+		const int	fd = _open(path, _O_RDONLY);
+		if (fd < 0)
+			game_error("ERROR: FILE NOT FOUND");
+		while (1)
+		{
+			render->buffer = keep_reading_fd(fd);
+			if (render->buffer == NULL)
+				break ;
+			render->map = strjoin(render->map, render->buffer);
+			free(render->buffer);
+		}
+		close(fd);
+		if (render->map == NULL)
+			game_error("ERROR: EMPTY MAP");
+		return (split_string(render->map, '\n'));
 	}
-	close(fd);
-	if (render->map == NULL)
-		game_error("ERROR: EMPTY MAP");
-	return (split_string(render->map, '\n'));
-}
+#else
+	char	**render_map(t_game *render, const char *path)
+	{
+		const int	fd = open(path, O_RDONLY);
+		if (fd < 0)
+			game_error("ERROR: FILE NOT FOUND");
+		while (1)
+		{
+			render->buffer = keep_reading_fd(fd);
+			if (render->buffer == NULL)
+				break ;
+			render->map = strjoin(render->map, render->buffer);
+			free(render->buffer);
+		}
+		close(fd);
+		if (render->map == NULL)
+			game_error("ERROR: EMPTY MAP");
+		return (split_string(render->map, '\n'));
+	}
+#endif
 
 int	draw_map(t_game *game)
 {

@@ -1,22 +1,74 @@
 #include "and_goodbye.h"
 
-void *image(t_game *game, char *path)
-{
-	SDL_Surface *xpmSurface = IMG_Load(path);
-	if (!xpmSurface)
+#ifdef _WIN32
+	void *image(t_game *game, char *path, wchar_t **argv)
 	{
-		printf("Not possible to load XPM image: %s\n", IMG_GetError());
-		close_game(game);
+		SDL_Surface *xpmSurface = IMG_Load(path);
+		if (!xpmSurface)
+		{
+			printf("Not possible to load XPM image: %s\n", IMG_GetError());
+			close_game(game, argv);
+		}
+		SDL_Texture *img = SDL_CreateTextureFromSurface(game->renderer, xpmSurface);
+		SDL_FreeSurface(xpmSurface);
+		if (!img)
+		{
+			printf("Not possible to create texture: %s\n", SDL_GetError());
+			close_game(game, argv);
+		}
+		return img;
 	}
-	SDL_Texture *img = SDL_CreateTextureFromSurface(game->renderer, xpmSurface);
-	SDL_FreeSurface(xpmSurface);
-	if (!img)
+
+	int	*img_init(t_game *game, wchar_t **argv)
 	{
-		printf("Not possible to create texture: %s\n", SDL_GetError());
-		close_game(game);
+		game->player = image(game, CHAR, argv);
+		game->tree = image(game, TREE, argv);
+		game->floor = image(game, FLOOR, argv);
+		game->exit = image(game, EXIT, argv);
+		game->item = image(game, ITEM, argv);
+		return (0);
 	}
-	return img;
-}
+
+	void	change_image(t_game *game, char *new_image, wchar_t **argv)
+	{
+		SDL_DestroyTexture(game->player);
+		game->player = image(game, new_image, argv);
+	}
+#else
+	void *image(t_game *game, char *path)
+	{
+		SDL_Surface *xpmSurface = IMG_Load(path);
+		if (!xpmSurface)
+		{
+			printf("Not possible to load XPM image: %s\n", IMG_GetError());
+			close_game(game);
+		}
+		SDL_Texture *img = SDL_CreateTextureFromSurface(game->renderer, xpmSurface);
+		SDL_FreeSurface(xpmSurface);
+		if (!img)
+		{
+			printf("Not possible to create texture: %s\n", SDL_GetError());
+			close_game(game);
+		}
+		return img;
+	}
+
+	int	*img_init(t_game *game)
+	{
+		game->player = image(game, CHAR);
+		game->tree = image(game, TREE);
+		game->floor = image(game, FLOOR);
+		game->exit = image(game, EXIT);
+		game->item = image(game, ITEM);
+		return (0);
+	}
+
+	void	change_image(t_game *game, char *new_image)
+	{
+		SDL_DestroyTexture(game->player);
+		game->player = image(game, new_image);
+	}
+#endif
 
 void sdl_put_image_to_window(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y)
 {
@@ -32,15 +84,7 @@ void sdl_put_image_to_window(SDL_Renderer *renderer, SDL_Texture *texture, int x
 	SDL_RenderCopy(renderer, texture, NULL, &destRect);
 }
 
-int	*img_init(t_game *game)
-{
-	game->player = image(game, CHAR);
-	game->tree = image(game, TREE);
-	game->floor = image(game, FLOOR);
-	game->exit = image(game, EXIT);
-	game->item = image(game, ITEM);
-	return (0);
-}
+
 
 void	sprites(t_game *game, void *img, int x, int y)
 {
@@ -67,8 +111,4 @@ void	translate_map(t_game *game, const int x, const int y)
 	}
 }
 
-void	change_image(t_game *game, char *new_image)
-{
-	SDL_DestroyTexture(game->player);
-	game->player = image(game, new_image);
-}
+

@@ -28,33 +28,66 @@ static void	move_player(t_game *game, int x, int y)
 	draw_map(game);
 }
 
-void	deal_key(const SDL_Keycode keycode, t_game *game)
-{
-	switch (keycode) {
-		case SDLK_UP:
-		case SDLK_w:
-			change_image(game, CHAR_BACK);
-			move_player(game, game->config.x - 1, game->config.y);
-			break;
-		case SDLK_DOWN:
-		case SDLK_s:
-			change_image(game, CHAR);
-			move_player(game, game->config.x + 1, game->config.y);
-			break;
-		case SDLK_LEFT:
-		case SDLK_a:
-			change_image(game, CHAR_LEFT);
-			move_player(game, game->config.x, game->config.y - 1);
-			break;
-		case SDLK_RIGHT:
-		case SDLK_d:
-			change_image(game, CHAR_RIGHT);
-			move_player(game, game->config.x, game->config.y + 1);
-			break;
-		case SDLK_ESCAPE:
-			close_game(game);
-			break;
-		default:
-			break;
+#ifdef _WIN32
+	void	deal_key(const SDL_Keycode keycode, t_game *game, wchar_t **argv)
+	{
+		switch (keycode) {
+			case SDLK_UP:
+			case SDLK_w:
+				change_image(game, CHAR_BACK, argv);
+				move_player(game, game->config.x - 1, game->config.y);
+				break;
+			case SDLK_DOWN:
+			case SDLK_s:
+				change_image(game, CHAR, argv);
+				move_player(game, game->config.x + 1, game->config.y);
+				break;
+			case SDLK_LEFT:
+			case SDLK_a:
+				change_image(game, CHAR_LEFT, argv);
+				move_player(game, game->config.x, game->config.y - 1);
+				break;
+			case SDLK_RIGHT:
+			case SDLK_d:
+				change_image(game, CHAR_RIGHT, argv);
+				move_player(game, game->config.x, game->config.y + 1);
+				break;
+			case SDLK_ESCAPE:
+				close_game(game, argv);
+				break;
+			default:
+				break;
+		}
 	}
-}
+#else
+	void	deal_key(const SDL_Keycode keycode, t_game *game)
+	{
+		switch (keycode) {
+			case SDLK_UP:
+			case SDLK_w:
+				change_image(game, CHAR_BACK);
+				move_player(game, game->config.x - 1, game->config.y);
+				break;
+			case SDLK_DOWN:
+			case SDLK_s:
+				change_image(game, CHAR);
+				move_player(game, game->config.x + 1, game->config.y);
+				break;
+			case SDLK_LEFT:
+			case SDLK_a:
+				change_image(game, CHAR_LEFT);
+				move_player(game, game->config.x, game->config.y - 1);
+				break;
+			case SDLK_RIGHT:
+			case SDLK_d:
+				change_image(game, CHAR_RIGHT);
+				move_player(game, game->config.x, game->config.y + 1);
+				break;
+			case SDLK_ESCAPE:
+				close_game(game);
+				break;
+			default:
+				break;
+		}
+	}
+#endif

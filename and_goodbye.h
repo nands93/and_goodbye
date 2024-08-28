@@ -1,15 +1,31 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <string.h>
-# include <unistd.h>
-# include <SDL2/SDL.h>
-# include <SDL2/SDL_keycode.h>
-# include <SDL2/SDL_image.h>
+#ifdef _WIN32
+	#include <windows.h>
+    #include <stdlib.h>
+    #include <stdio.h>
+    #include <fcntl.h>
+    #include <string.h>
+	#include <io.h>
+	#include <fcntl.h>
+	#include <sys/types.h>
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_keycode.h>
+    #include <SDL2/SDL_image.h>
+	#include <wchar.h>
+#else
+    #include <stdlib.h>
+    #include <stdio.h>
+    #include <fcntl.h>
+    #include <string.h>
+    #include <unistd.h>
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_keycode.h>
+    #include <SDL2/SDL_image.h>
+#endif
 
+#define _UNICODE
 # define IMG_SIZE 32
 # define BUFFER_SIZE 42
 # define TREE "./img/environment/tree.xpm"
@@ -75,7 +91,6 @@ void	putend(char *s, const int fd);
 int		game_error(char	*msg);
 int		game_success(char	*msg);
 void	render_free(char **render);
-void	check_ber(const char *find);
 
 //read_fd.c
 char	*strjoin(char *s1, char *s2);
@@ -84,15 +99,31 @@ char	*saved_fd(char *saved);
 char	*read_fd(const int fd, char *saved);
 char	*keep_reading_fd(int fd);
 
+
+//windows vs unix
+#ifdef _WIN32
+void	config(t_game *game, wchar_t **argv);
+void	close_game(t_game *game, wchar_t **argv);
+void	*image(t_game *game, char *path, wchar_t **argv);
+void	change_image(t_game *game, char *new_image, wchar_t **argv);
+int		*img_init(t_game *game, wchar_t **argv);
+void	deal_key(const SDL_Keycode keycode, t_game *game, wchar_t **argv);
+void	check_ber(const wchar_t *find);
+#else
+void	config(t_game *game);
+void	close_game(t_game *game);
+void	*image(t_game *game, char *path);
+void	change_image(t_game *game, char *new_image);
+int		*img_init(t_game *game);
+void	deal_key(const SDL_Keycode keycode, t_game *game);
+void	check_ber(const char *find);
+#endif
+
 //split_string.c
 char		*substring(char const *s, unsigned int start, size_t len);
-static int	count_words(const char *s, char c);
-static char	size_word(char const *s, char c, int i);
 char		**split_string(char const *s, char c);
 
 //config.c
-void	config(t_game *game);
-void	close_game(t_game *game);
 void	initializator(t_game *game);
 void	map_counter(t_game *game);
 int		counter_error(t_game *game);
@@ -101,14 +132,8 @@ int		counter_error(t_game *game);
 int		check_validation(t_game *game);
 
 //image.c
-void	*image(t_game *game, char *path);
 void	sprites(t_game *game, void *img, int x, int y);
 void	translate_map(t_game *game, const int x, const int y);
-void	change_image(t_game *game, char *new_image);
-int		*img_init(t_game *game);
-
-//movement.c
-void	deal_key(const SDL_Keycode keycode, t_game *game);
 
 //infection.c
 void	translate_infect_map(t_game *game, int x, int y);

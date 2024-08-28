@@ -103,7 +103,7 @@ char	*read_fd(const int fd, char *saved)
 	int bytes = 1;
 	while (bytes > 0 && !chrstr(saved, '\n'))
 	{
-		bytes = read(fd, buff, BUFFER_SIZE);
+		bytes = _read(fd, buff, BUFFER_SIZE);
 		if (bytes < 0)
 		{
 			free (buff);
