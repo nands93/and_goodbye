@@ -11,7 +11,6 @@ endif
 
 LDFLAGS = -lSDL2 -lSDL2_image
 DEBUG_FLAGS = -g3
-CFLAGS = -Wall -Wextra -std=c11
 
 SRC = config.c utils.c read_fd.c split_string.c render.c image.c validator.c infected_map.c and_goodbye.c movement.c
 OBJS = $(SRC:.c=.o)
