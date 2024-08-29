@@ -2,14 +2,11 @@
 # define SO_LONG_H
 
 #ifdef _WIN32
-	#include <windows.h>
     #include <stdlib.h>
     #include <stdio.h>
     #include <fcntl.h>
     #include <string.h>
 	#include <io.h>
-	#include <fcntl.h>
-	#include <sys/types.h>
     #include "SDL2\SDL.h"
     #include "SDL2\SDL_keycode.h"
     #include "SDL2\SDL_image.h"
