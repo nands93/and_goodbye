@@ -11,7 +11,6 @@ else
 	LDFLAGS = -lSDL2 -lSDL2_image
 endif
 
-
 DEBUG_FLAGS = -g3
 
 ifeq ($(OS),Windows_NT)
