@@ -3,7 +3,7 @@ NAME = and_goodbye
 ifeq ($(OS),Windows_NT)
     RM = del /Q
     EXE_EXT = .exe
-    WINFLAGS = -IC:/msys64/mingw64/include -LC:/msys64/mingw64/lib
+    WINFLAGS = -I\include\SDL2 -L\lib
 	LDFLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 else
     RM = rm -f
@@ -14,10 +14,19 @@ endif
 
 DEBUG_FLAGS = -g3
 
-SRC = config.c utils.c read_fd.c split_string.c render.c image.c validator.c infected_map.c and_goodbye.c movement.c
+SRC = src\config.c \
+	  src\utils.c \
+	  src\read_fd.c \
+	  src\split_string.c \
+	  src\render.c \
+	  src\image.c \
+	  src\validator.c \
+	  src\infected_map.c \
+	  src\and_goodbye.c \
+	  src\movement.c
 OBJS = $(SRC:.c=.o)
 
-%.o: %.c
+%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 ifeq ($(OS),Windows_NT)
