@@ -14,6 +14,7 @@ endif
 
 DEBUG_FLAGS = -g3
 
+ifeq ($(OS),Windows_NT)
 SRC = src\config.c \
 	  src\utils.c \
 	  src\read_fd.c \
@@ -24,6 +25,19 @@ SRC = src\config.c \
 	  src\infected_map.c \
 	  src\and_goodbye.c \
 	  src\movement.c
+else
+SRC = src/config.c \
+	  src/utils.c \
+	  src/read_fd.c \
+	  src/split_string.c \
+	  src/render.c \
+	  src/image.c \
+	  src/validator.c \
+	  src/infected_map.c \
+	  src/and_goodbye.c \
+	  src/movement.c
+endif
+
 OBJS = $(SRC:.c=.o)
 
 %.o: src/%.c
