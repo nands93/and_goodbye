@@ -1,82 +1,42 @@
 #include "and_goodbye.h"
 
-#ifdef _WIN32
-	void	config(t_game *game, wchar_t **argv)
-	{
-		size_t	x = 0;
-		while (game->render[x])
-			x++;
-		game->wid = ((strlen(game->render[0]) - 1) * IMG_SIZE);
-		game->hei = (x * IMG_SIZE);
-		game->window = SDL_CreateWindow("SO_LONG_AND_GOODBYE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, game->wid, game->hei, SDL_WINDOW_SHOWN);
-		if (game->window == NULL) {
-			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-			close_game(game, argv);
-		}
-		game->renderer = SDL_CreateRenderer(game->window, -1, SDL_RENDERER_ACCELERATED);
-		game->screenSurface = SDL_GetWindowSurface(game->window);
-		SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
-		SDL_RenderClear(game->renderer);
-		SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
-		img_init(game, argv);
+void	config(t_game *game)
+{
+	size_t	x = 0;
+	while (game->render[x])
+		x++;
+	game->wid = ((strlen(game->render[0]) - 1) * IMG_SIZE);
+	game->hei = (x * IMG_SIZE);
+	game->window = SDL_CreateWindow("SO_LONG_AND_GOODBYE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, game->wid, game->hei, SDL_WINDOW_SHOWN);
+	if (game->window == NULL) {
+		printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+		close_game(game);
 	}
+	game->renderer = SDL_CreateRenderer(game->window, -1, SDL_RENDERER_ACCELERATED);
+	game->screenSurface = SDL_GetWindowSurface(game->window);
+	SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
+	SDL_RenderClear(game->renderer);
+	SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
+	img_init(game);
+}
 
-	void	close_game(t_game *game, wchar_t **argv)
-	{
-		free(game->buffer);
-		free(game->map);
-		render_free(game->render);
-		render_free(game->infected_map);
-		SDL_DestroyTexture(game->player);
-		SDL_DestroyTexture(game->tree);
-		SDL_DestroyTexture(game->floor);
-		SDL_DestroyTexture(game->item);
-		SDL_DestroyTexture(game->exit);
-		SDL_DestroyRenderer(game->renderer);
-		SDL_DestroyWindow(game->window);
-		game->finish = 1;
-		LocalFree(argv);
-		SDL_Quit();
-		exit(0);
-	}
-#else
-	void	config(t_game *game)
-	{
-		size_t	x = 0;
-		while (game->render[x])
-			x++;
-		game->wid = ((strlen(game->render[0]) - 1) * IMG_SIZE);
-		game->hei = (x * IMG_SIZE);
-		game->window = SDL_CreateWindow("SO_LONG_AND_GOODBYE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, game->wid, game->hei, SDL_WINDOW_SHOWN);
-		if (game->window == NULL) {
-			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-			close_game(game);
-		}
-		game->renderer = SDL_CreateRenderer(game->window, -1, SDL_RENDERER_ACCELERATED);
-		game->screenSurface = SDL_GetWindowSurface(game->window);
-		SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
-		SDL_RenderClear(game->renderer);
-		SDL_SetRenderDrawColor(game->renderer, 255, 255, 255, 255);
-		img_init(game);
-	}
-	void	close_game(t_game *game)
-	{
-		free(game->buffer);
-		free(game->map);
-		render_free(game->render);
-		render_free(game->infected_map);
-		SDL_DestroyTexture(game->player);
-		SDL_DestroyTexture(game->tree);
-		SDL_DestroyTexture(game->floor);
-		SDL_DestroyTexture(game->item);
-		SDL_DestroyTexture(game->exit);
-		SDL_DestroyRenderer(game->renderer);
-		SDL_DestroyWindow(game->window);
-		game->finish = 1;
-		SDL_Quit();
-		exit(0);
-	}
-#endif
+void	close_game(t_game *game)
+{
+	free(game->buffer);
+	free(game->map);
+	render_free(game->render);
+	render_free(game->infected_map);
+	SDL_DestroyTexture(game->player);
+	SDL_DestroyTexture(game->tree);
+	SDL_DestroyTexture(game->floor);
+	SDL_DestroyTexture(game->item);
+	SDL_DestroyTexture(game->exit);
+	SDL_DestroyRenderer(game->renderer);
+	SDL_DestroyWindow(game->window);
+	game->finish = 1;
+	SDL_Quit();
+	exit(0);
+}
 
 void	initializator(t_game *game)
 {

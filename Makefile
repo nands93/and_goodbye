@@ -1,51 +1,40 @@
-NAME = and_goodbye
+NAME	= and_goodbye
 
-ifeq ($(OS),Windows_NT)
-    RM = del /Q
-    EXE_EXT = .exe
-    WINFLAGS = -IC:/msys64/mingw64/include -LC:/msys64/mingw64/lib -municode
-else
-    RM = rm -f
-    EXE_EXT =
-endif
+CC	= gcc
+RM	= rm -f
 
 LDFLAGS = -lSDL2 -lSDL2_image
+
 DEBUG_FLAGS = -g3
 
-SRC = config.c utils.c read_fd.c split_string.c render.c image.c validator.c infected_map.c and_goodbye.c movement.c
-OBJS = $(SRC:.c=.o)
+SRC	= config.c utils.c read_fd.c split_string.c render.c image.c validator.c infected_map.c and_goodbye.c movement.c
+
+OBJS	= $(SRC:.c=.o)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-ifeq ($(OS),Windows_NT)
-$(NAME)$(EXE_EXT): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)$(EXE_EXT) $(WINFLAGS) $(LDFLAGS)
-else
-$(NAME)$(EXE_EXT): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)$(EXE_EXT) $(LDFLAGS)
-endif
+$(NAME):	$(OBJS)
+			$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+			printf "COMPILATION SUCCESSFUL!\n"
 
-all: $(NAME)$(EXE_EXT)
+all:	$(NAME)
 
-ifeq ($(OS),Windows_NT)
-debug: $(OBJS)
-	$(CC) $(OBJS) $(DEBUG_FLAGS) -o $(NAME)$(EXE_EXT) $(WINFLAGS) $(LDFLAGS)
-else
-debug: $(OBJS)
-	$(CC) $(OBJS) $(DEBUG_FLAGS) -o $(NAME)$(EXE_EXT) $(LDFLAGS)
-endif
+debug: 	$(OBJS)
+		$(CC) $(OBJS) $(DEBUG_FLAGS) -o $(NAME) $(LDFLAGS)
+		printf "SUCCESSFUL DEBUG!\n"
 
 clean:
-	$(RM) $(OBJS)
+		$(RM) $(OBJS)
 
-fclean: clean
-	$(RM) $(NAME)$(EXE_EXT)
+fclean:	clean
+		$(RM) $(NAME)
+		printf "FULLY CLEANED!\n"
 
-re: fclean all
+re:	fclean all
 
 freshDebug: fclean debug
 
 .SILENT:
 
-.PHONY: all clean fclean re debug freshDebug
+.PHONY: all clean fclean re
