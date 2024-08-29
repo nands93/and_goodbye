@@ -49,6 +49,16 @@ void	initializator(t_game *game)
 	game->counter.item = 0;
 	game->counter.exit = 0;
 	game->counter.player = 0;
+	game->counter.infected_exit = 0;
+	game->counter.infected_item = 0;
+	game->buffer = NULL;
+	game->render = NULL;
+	game->infected_map = NULL;
+	game->tree = NULL;
+	game->floor = NULL;
+	game->exit = NULL;
+	game->item = NULL;
+	game->player = NULL;
 	game->config.x = 0;
 	game->config.y = 0;
 	game->config.moves = 0;

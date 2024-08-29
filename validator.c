@@ -44,7 +44,6 @@ static void walls_checker(const t_game *game)
 	}
 }
 
-
 static void	char_checker(char **map)
 {
 	int i = 0;

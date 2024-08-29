@@ -95,59 +95,31 @@ char	*strjoin(char *s1, char *s2)
 	return (dest);
 }
 
-#ifdef _WIN32
-	char	*read_fd(const int fd, char *saved)
+char	*read_fd(const int fd, char *saved)
+{
+	char *buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buff)
+		return (NULL);
+	int bytes = 1;
+	while (bytes > 0 && !chrstr(saved, '\n'))
 	{
-		char *buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!buff)
-			return (NULL);
-		int bytes = 1;
-		while (bytes > 0 && !chrstr(saved, '\n'))
+		bytes = read(fd, buff, BUFFER_SIZE);
+		if (bytes < 0)
 		{
-			bytes = _read(fd, buff, BUFFER_SIZE);
-			if (bytes < 0)
-			{
-				free (buff);
-				return (NULL);
-			}
-			buff[bytes] = '\0';
-			if (!saved)
-			{
-				saved = malloc(1 * sizeof(char));
-				*saved = '\0';
-			}
-			saved = strjoin(saved, buff);
-		}
-		free(buff);
-		return (saved);
-	}
-#else
-	char	*read_fd(const int fd, char *saved)
-	{
-		char *buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!buff)
+			free (buff);
 			return (NULL);
-		int bytes = 1;
-		while (bytes > 0 && !chrstr(saved, '\n'))
-		{
-			bytes = read(fd, buff, BUFFER_SIZE);
-			if (bytes < 0)
-			{
-				free (buff);
-				return (NULL);
-			}
-			buff[bytes] = '\0';
-			if (!saved)
-			{
-				saved = malloc(1 * sizeof(char));
-				*saved = '\0';
-			}
-			saved = strjoin(saved, buff);
 		}
-		free(buff);
-		return (saved);
+		buff[bytes] = '\0';
+		if (!saved)
+		{
+			saved = malloc(1 * sizeof(char));
+			*saved = '\0';
+		}
+		saved = strjoin(saved, buff);
 	}
-#endif
+	free(buff);
+	return (saved);
+}
 
 char	*keep_reading_fd(int fd)
 {

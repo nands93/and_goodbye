@@ -1,14 +1,28 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <string.h>
-# include <unistd.h>
-# include <SDL2/SDL.h>
-# include <SDL2/SDL_keycode.h>
-# include <SDL2/SDL_image.h>
+#ifdef _WIN32
+	#include <windows.h>
+    #include <stdlib.h>
+    #include <stdio.h>
+    #include <fcntl.h>
+    #include <string.h>
+	#include <io.h>
+	#include <fcntl.h>
+	#include <sys/types.h>
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_keycode.h>
+    #include <SDL2/SDL_image.h>
+#else
+    #include <stdlib.h>
+    #include <stdio.h>
+    #include <fcntl.h>
+    #include <string.h>
+    #include <unistd.h>
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_keycode.h>
+    #include <SDL2/SDL_image.h>
+#endif
 
 # define IMG_SIZE 32
 # define BUFFER_SIZE 42
