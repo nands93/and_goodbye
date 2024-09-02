@@ -38,7 +38,6 @@ SRC = src/config.c \
 endif
 
 OBJS = $(SRC:.c=.o)
-
 %.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
