@@ -1,4 +1,5 @@
 # And Goodbye — College Game Re-release (SDL2)
+![Game Screenshot](screenshot/map2.jpg)
 
 A small top‑down game originally built for college coursework, now re-released using SDL2 for portability.
 
@@ -42,6 +43,8 @@ The output binary is `and_goodbye` (Linux/macOS) or `and_goodbye.exe` (Windows).
 - Windows:
   - `and_goodbye.exe maps\map.ber`
   - Ensure `SDL2.dll` and `SDL2_image.dll` are on PATH or next to the executable (see [bin/](bin/)).
+ 
+  ![Game Screenshot](screenshot/map.jpg)
 
 ## Usage
 
@@ -58,6 +61,8 @@ The output binary is `and_goodbye` (Linux/macOS) or `and_goodbye.exe` (Windows).
 - Loading flow:
   - [`render_map`](src/render.c) reads the file, accumulates text, and splits lines via [`split_string`](src/split_string.c), using buffered reads from [`keep_reading_fd`](src/read_fd.c).
 - Tile size is defined by [`IMG_SIZE`](include/and_goodbye.h) (currently 32).
+
+![Game Screenshot](screenshot/map1.gif)
 
 ## Troubleshooting
 
